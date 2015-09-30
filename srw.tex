@@ -4,6 +4,7 @@
 
 %\includeonlyframes{current}
 
+\usepackage{bookmark}
 \usepackage{times}
 \usefonttheme{structurebold}
 \usepackage{listings}
@@ -35,6 +36,20 @@
 \setbeamertemplate{footline}[page number]{}
 \setbeamertemplate{navigation symbols}{}
 \usefonttheme{structurebold}
+
+\AtBeginSection{\frame{\sectionpage}}
+
+\defbeamertemplate{section page}{mine}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}#1}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+
+\setbeamertemplate{section page}[mine]
 
 \title{Static and Dynamic Analysis of Test Suites}
 \author{Patrick Lam}
@@ -99,5 +114,88 @@ Convince you to analyze programs \emph{and tests} for fun and profit!
     \end{itemize}
   \end{changemargin}
 \end{frame}
+
+% elaborate on these points
+
+\begin{frame}
+  \frametitle{Observation}
+  \centering
+  \LARGE Programs come with gobs of tests.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tests and Modern Software}
+  Almost-first-class support:\\
+  JUnit, etc.
+
+  A form of lightweight specifications.
+  \begin{itemize}
+  \item executable, provide context
+  \item at various granularities (unit, system)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Pervasiveness of Test Suites}
+% add stats
+\end{frame}
+
+\begin{frame}
+  \frametitle{Opportunity}
+  Leverage test suites in program analysis.
+\end{frame}
+
+%\begin{frame}
+%  \centering \Huge
+%  Related Work
+%\end{frame}
+\section{Related Work}
+
+\begin{frame}
+  \frametitle{Concolic analysis}
+\end{frame}
+
+\begin{frame}
+  \frametitle{PHP Analysis}
+\end{frame}
+
+\begin{frame}
+  \frametitle{TamiFlex}
+\end{frame}
+
+\begin{frame}
+  \frametitle{DSD-Crasher}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Empirical Studies}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Properties of Test Suites}
+  (GTAC 2014)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Similar Test Methods}
+  (PPPJ 2015)
+\end{frame}
+
+\section{Future Perspectives}
+
+\begin{frame}
+  \frametitle{What Test Suites can Tell Us}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What We Can Do With Tests?}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Better Program Understanding via Tests}
+\end{frame}
+
+\section{Conclusions}
+
 
 \end{document}
