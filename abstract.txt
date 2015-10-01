@@ -1,0 +1,14 @@
+Title: Static and Dynamic Analysis of Test Suites
+
+Test suites are a rich yet untapped source of developer-provided
+information about desired program behaviour. Presently, tool support
+for test suites is, for the most part, limited to computing code
+coverage. I will discuss the potential benefits of applying novel
+static and dynamic analysis techniques to test suites, both in
+combination with the system under test as well as on the test suite
+alone. Test suites could be used to improve the accuracy of dynamic
+or concolic program analyses, and could provide more context about the
+program to static analyses. As a specific example of a test-only
+analysis, I will describe my analysis of test suites to find similar
+test methods amenable to refactoring.
+

@@ -191,20 +191,43 @@ Convince you to analyze programs \emph{and tests} for fun and profit!
 \end{frame}
 
 \begin{frame}
+  \frametitle{Pervasiveness of Test Suites}
+\begin{center}
+\includegraphics[width=\textwidth, height=.8\textheight, keepaspectratio=true]{images/test-vs-system.png}
+\end{center}
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=1cm,yshift=1.3cm] at (current page.center)
+{
+m=0.3002
+};
+\node [xshift=1.5cm,yshift=-1.6cm] at (current page.center)
+{
+m=0.03514
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
   \frametitle{Tests and Modern Software}
-  Almost-first-class support:\\
-  JUnit, etc.
+  Extensive near-language support:
+
+\begin{center}
+\includegraphics[width=.2\textwidth] {images/junit-logo.png} \hspace*{3em}
+\includegraphics[width=.2\textwidth] {images/Nunit.png}  \hspace*{3em}
+\includegraphics[width=.2\textwidth] {images/PHPUnit-logo.jpg}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{What Tests Do}
 
   A form of lightweight specifications.
   \begin{itemize}
   \item executable, provide context
   \item at various granularities (unit, system)
   \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Pervasiveness of Test Suites}
-% add stats
 \end{frame}
 
 \begin{frame}
@@ -272,23 +295,6 @@ Needs test inputs to exercise the program.
 \end{frame}
 
 \section{Empirical Studies}
-
-\begin{frame}
-  \frametitle{Relative Sizes of Test Suites}
-\begin{center}
-\includegraphics[width=\textwidth, height=.8\textheight, keepaspectratio=true]{images/test-vs-system.png}
-\end{center}
-\begin{tikzpicture}[remember picture,overlay]
-\node [xshift=1cm,yshift=1.3cm] at (current page.center)
-{
-m=0.3002
-};
-\node [xshift=1.5cm,yshift=-1.6cm] at (current page.center)
-{
-m=0.03514
-};
-\end{tikzpicture}
-\end{frame}
 
 \begin{frame}
   \frametitle{Complexity of Test Suites}
