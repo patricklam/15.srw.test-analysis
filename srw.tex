@@ -119,7 +119,7 @@
 \setbeamertemplate{section page}[mine]
 
 \title{Static and Dynamic Analysis of Test Suites}
-\author{Patrick Lam}
+\author{Patrick Lam\\University of Waterloo}
 \date{October 3, 2015}
 
 \colorlet{redshaded}{red!25!bg}
@@ -171,13 +171,14 @@ Convince you to analyze programs \emph{and tests} for fun and profit!
 \end{frame}
 
 \begin{frame}
-  \frametitle{Why?}
+  \frametitle{Motivations for Program Analysis}
   \Large
   \begin{changemargin}{1cm}
     \begin{itemize}
-    \item find bugs;
-    \item enable program understanding \& transformation
-    \item evaluate software quality
+    \item enable program understanding \& \\
+ \hspace*{2em} transformation;
+    \item eliminate bugs;
+    \item ensure software quality.
     \end{itemize}
   \end{changemargin}
 \end{frame}
@@ -209,7 +210,7 @@ m=0.03514
 
 \begin{frame}
   \frametitle{Tests and Modern Software}
-  Extensive near-language support:
+\Large  Extensive library support:
 
 \begin{center}
 \includegraphics[width=.2\textwidth] {images/junit-logo.png} \hspace*{3em}
@@ -223,16 +224,28 @@ m=0.03514
 \begin{frame}
   \frametitle{What Tests Do}
 
-  A form of lightweight specifications.
-  \begin{itemize}
-  \item executable, provide context
-  \item at various granularities (unit, system)
-  \end{itemize}
+%  A form of lightweight specifications.
+%  \begin{itemize}
+%  \item executable, provide context
+%  \item at various granularities (unit, system)
+%  \end{itemize}
+\Large 
+\begin{changemargin}{1cm}
+Tests encode:
+\begin{itemize}
+\item how to invoke the system under test; and,
+\item what it should do.
+\end{itemize}
+\end{changemargin}
+
 \end{frame}
 
 \begin{frame}
   \frametitle{Opportunity}
+\begin{center}
+\Large
   Leverage test suites in program analysis.
+\end{center}
 \end{frame}
 
 %\begin{frame}
@@ -930,39 +943,6 @@ public void test_TCC___String() {
    \end{itemize}    
 }
 \end{frame}
-
-\begin{frame}
-\frametitle{Limitations: Things not Considered} {
-     \Large
-     \begin{itemize}
-        \item Assertion Arguments
-           \vspace{0.5cm}
-        \item Helper Methods
-           \vspace{0.5cm}
-     \end{itemize}    
-   }
-\end{frame}
-\note{
-The limitations of our technique include not considering assertion
-arguments and helper methods. Being oblivious to assertion arguments
-increases our false positive rates but also helps us detect more
-clones (a Precision vs Recall tradeoff situation). Our technique
-is also unaware of helper methods that play major roles in some
-test methods, but we argue that those methods are most likely already
-refactored and less likely worth the effort to refactor.
-}
-
-\begin{frame}
-  \frametitle{Conclusions} {
-     \Large
-     \begin{itemize}
-        \item We partitioned test methods by ordered sets of \mbox{\em Assertion Fingerprints}.
-           \vspace{0.5cm}
-        \item Assertion Fingerprints reported that 39\% test methods in the 10 benchmark test suites are clones with an estimated 75\% true positive rate.
-     \end{itemize}   
-	}
-\end{frame}
-
 
 \section{Future Perspectives}
 
