@@ -1,18 +1,18 @@
 %setID: 37
 \begin{lstlisting}
 public void testNominalFiltering() {
-   m_Filter = getFilter(Attribute.NOMINAL);
-   Instances result = useFilter();
-   for (int i = 0; i < result.numAttributes(); i++)
-      assertTrue(result.attribute(i).type() != Attribute.NOMINAL);
+  m_Filter = getFilter(Attribute.NOMINAL);
+  Instances result = useFilter();
+  for (int i = 0; i < result.numAttributes(); i++)
+     assertTrue(result.attribute(i).type() != Attribute.NOMINAL);
 }
 \end{lstlisting}
 \begin{lstlisting}
 public void testStringFiltering() {
-   m_Filter = getFilter(Attribute.STRING);
-   Instances result = useFilter();
-   for (int i = 0; i < result.numAttributes(); i++)
-      assertTrue(result.attribute(i).type() != Attribute.STRING);
+  m_Filter = getFilter(Attribute.STRING);
+  Instances result = useFilter();
+  for (int i = 0; i < result.numAttributes(); i++)
+     assertTrue(result.attribute(i).type() != Attribute.STRING);
 }
 \end{lstlisting}
 

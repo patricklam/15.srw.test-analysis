@@ -248,39 +248,44 @@ Tests encode:
 \end{center}
 \end{frame}
 
-%\begin{frame}
-%  \centering \Huge
-%  Related Work
-%\end{frame}
 \section{Related Work}
 
 \begin{frame}
   \frametitle{Static Analysis Limitations}
-Soundiness:
-\begin{itemize}
-\item dynamic class loading
-\item eval
-\end{itemize}
+\centering
+\includegraphics[width=.6\textwidth]{images/soundy.jpg}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Dynamic Analysis Limitations}
+
+\centering
+\includegraphics[width=.6\textwidth]{images/0013_class_1_trail.JPG}
+
 \end{frame}
 
 
 \begin{frame}
   \frametitle{Concolic analysis}
 
+\Large
+\begin{changemargin}{1cm}
 Run the program with arbitrary inputs, \\
-use search to find new inputs/new paths.
+\hspace*{2em} (some symbolic);\\
+use solver to find new paths/inputs.
+\end{changemargin}
 \end{frame}
 
 \begin{frame}
   \frametitle{PHP Analysis}
 
-Phantm
 \begin{center}
 \includegraphics[width=.2\textwidth]{images/phantm-blue-solid.png}
 \end{center}
 \begin{itemize}
-\item Run the program, observe the configuration loading phase.
-\item Use the config to do type analysis on the remainder of the program.
+\item Choose program inputs and run the program.
+\item Observe the configuration loading phase.
+\item Use configuration information to do type analysis on the remainder of the program.
 \end{itemize}
 \end{frame}
 
@@ -291,12 +296,15 @@ Phantm
 \includegraphics[width=.2\textwidth]{images/tamiflex.png}
 \end{center}
 
-
+\Large
+\begin{changemargin}{1cm}
 \begin{itemize}
-\item observe reflective and classes loaded through custom class loaders
+\item Choose program inputs and run the program.
+\item Observe classes loaded through reflection \\
+ \hspace*{2em} and custom classloaders.
 \end{itemize}
+\end{changemargin}
 
-Needs test inputs to exercise the program.
 \end{frame}
 
 \begin{frame}
@@ -324,8 +332,13 @@ Needs test inputs to exercise the program.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Similar Test Methods}
-  (PPPJ 2015)
+  \begin{centering}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center]{part title}
+      \usebeamerfont{section title}Similar Test Methods\\ \small (a case study in static analysis of tests)\par
+    \end{beamercolorbox}
+  \end{centering}
 \end{frame}
 
 \begin{frame}
@@ -474,7 +487,9 @@ Therefore, the purpose of our research is to help the engineers identify not jus
 
 \begin{frame}
   \frametitle{Refactoring Example} {\small	
+\begin{changemargin}{.2cm}
      \input{motivating_code_paper}
+\end{changemargin}
 	}
 \end{frame}
 \note{
@@ -531,7 +546,9 @@ graph theories, machine learning, and data structures.
 \begin{frame}
   \frametitle{Key Insight} {\small	
      \Large
-     Similar tests often have similar sets of asserts
+\begin{center}
+     Similar tests often have similar sets of asserts.
+\end{center}
 	}
 \end{frame}
 
@@ -644,8 +661,10 @@ block.
 }
 
 \begin{frame}
-  \frametitle{Example: Code} {\small	
+  \frametitle{Example: Code} {\small
+\begin{changemargin}{.2cm}
      \input{contrived_code}
+\end{changemargin}
 	}
 \end{frame}
 \note{
@@ -660,14 +679,16 @@ Therefore, the next slide is the control flow graph of this example.
 }
 
 \begin{frame}
-  \frametitle{Example: CFG} {\Large	
-     \vspace*{-1em}
+  \frametitle{Example: CFG} 
+\begin{center}
+\scalebox{0.8}{
      \input{contrived_graph}
-	}
+}
+\end{center}
 \end{frame}
 
 \begin{frame}
-   \frametitle{Branch Count} {\Large	
+   \frametitle{Branch Count: Intuition} {\Large	
      \begin{itemize}
         \item An assertion inside an if statement is likely to be different from one that is not.
      \end{itemize}
@@ -675,9 +696,12 @@ Therefore, the next slide is the control flow graph of this example.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: CFG} {\Large	
-     \vspace*{-1em}
+  \frametitle{Example: CFG} {
+\begin{center}
+\scalebox{0.8}{
      \input{contrived_graph}
+}
+\end{center}
 	}
 \end{frame}
 
@@ -690,30 +714,33 @@ Therefore, the next slide is the control flow graph of this example.
 \end{frame}
 
 \begin{frame}
-   \frametitle{Merge Count} {\Large	
+   \frametitle{Merge Count: Intuition} {\Large	
      \begin{itemize}
-        \item An assertion with some prior operations inside an if statement is likely to be different from one that is not with any.
+        \item An assertion with some prior operations inside an {\tt if} statement is likely to be different from one that is not with any.
      \end{itemize}
 	}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: CFG} {\Large	
-     \vspace*{-1em}
+  \frametitle{Example: CFG} {
+\begin{center}
+\scalebox{0.8}{
      \input{contrived_graph}
+}
+\end{center}
 	}
 \end{frame}
 
 \begin{frame}
-   \frametitle{Merge Count} {\Large	
+   \frametitle{Merge Count} {\Large    
      \begin{itemize}
         \item Minimal number of merge vertices needed to reach vertex {\tt n} from the start of the method, including {\tt n}.
      \end{itemize}
-	}
-\end{frame}
+}
+ \end{frame}
 
 \begin{frame}
-   \frametitle{In Loop Flag} {\Large	
+   \frametitle{In-Loop Flag: Intuition} {\Large	
      \begin{itemize}
         \item An assertion inside a loop is likely to be different from one that is not.
      \end{itemize}
@@ -721,14 +748,17 @@ Therefore, the next slide is the control flow graph of this example.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: CFG} {\Large	
-     \vspace*{-1em}
+  \frametitle{Example: CFG} {
+\begin{center}
+\scalebox{0.8}{
      \input{contrived_graph}
+}
+\end{center}
 	}
 \end{frame}
 
 \begin{frame}
-   \frametitle{Exceptional Successors Count} {\Large	
+   \frametitle{Exceptional Successors Count: Intuition} {\Large	
      \begin{itemize}
         \item An assertion inside a try block with corresponding catch block(s) is likely to be different from one that is not.
      \end{itemize}
@@ -736,14 +766,17 @@ Therefore, the next slide is the control flow graph of this example.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: CFG} {\Large	
-     \vspace*{-1em}
+  \frametitle{Example: CFG} {
+\begin{center}
+\scalebox{0.8}{
      \input{contrived_graph}
+}
+\end{center}
 	}
 \end{frame}
 
 \begin{frame}
-   \frametitle{In Catch Block Flag} {\Large	
+   \frametitle{In-Catch-Block Flag: Intuition} {\Large	
      \begin{itemize}
         \item An assertion inside a catch block is likely to be different from one that is not.
      \end{itemize}
@@ -751,9 +784,12 @@ Therefore, the next slide is the control flow graph of this example.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example: CFG} {\Large	
-     \vspace*{-1em}
+  \frametitle{Example: CFG} {
+\begin{center}
+\scalebox{0.8}{
      \input{contrived_graph}
+}
+\end{center}
 	}
 \end{frame}
 
@@ -804,20 +840,6 @@ We find other methods that have the exact same ordered set of assertion fingerpr
 \begin{frame}
 \frametitle{Evaluation: Implementation} {
    \Large
-   \hspace{-1.5em}
-   \input{soot_diagram}
-   }
-\end{frame}
-\note{
-Our implementation uses the Soot framework to statically analyze test suites, generate assertion fingerprints, and compute refactoring candidates set. 
-Soot provides a control-flow graph over three-address code for each method. 
-Soot also provides function for computing useful properties such as dominators.
-}
-
-\begin{frame}
-\frametitle{Evaluation: Implementation} {
-   \Large
-   \hspace{-1.5em}
    \input{soot_diagram2}
    }
 \end{frame}
@@ -905,7 +927,6 @@ Weka: Machine learning framework
 
 \begin{frame}[fragile]
 \frametitle{Qualitative Analysis: JDOM} {
-\begin{figure}[ht!]
 \begin{lstlisting}
 public void test_TCC___String() {
   // [... 4x assertTrue(String, boolean)]
@@ -917,7 +938,6 @@ public void test_TCC___String() {
   }
 }
 \end{lstlisting}
-\end{figure}
 }
 \end{frame}
 
@@ -944,18 +964,70 @@ public void test_TCC___String() {
 }
 \end{frame}
 
+\begin{frame}
+  \frametitle{Next Step}
+
+Test refactoring.
+\end{frame}
+
+
 \section{Future Perspectives}
 
-\begin{frame}
-  \frametitle{What Test Suites can Tell Us}
-\end{frame}
 
 \begin{frame}
   \frametitle{What We Can Do With Tests?}
+\begin{changemargin}{1cm}
+\Large
+Tradtionally: \\
+\hspace*{1em} run the test, get yes/no answer.\\[1em]
+
+(Also, can combine with DSD/concolic analysis.)
+\end{changemargin}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Better Program Understanding via Tests}
+  \frametitle{Our usual interaction with tests}
+
+\begin{center}
+\begin{tikzpicture}
+      \node[draw] (code) { Program };
+      \node[draw,left of=code,xshift=-2em] (test) { Tests };
+      \node[draw,below of=code] (tool) { Analysis Tool };
+      \node[draw,below of=tool] (gentest) { Generated Tests };
+
+      \path[->] (test) edge[thick] (code);
+      \path[->] (code) edge[thick] (tool);
+      \path[->] (tool) edge[thick] (gentest);
+\end{tikzpicture}
+\Large
+~\\[1em]
+Tests are write-only with respect to the tool.
+\end{center}
+%\Large
+%\begin{changemargin}{1cm}
+%Test Generation:
+
+%Write-only. Output from static analysis.
+%\end{changemargin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Better Way}
+
+\begin{center}
+\begin{tikzpicture}
+      \node[draw] (code) { Program };
+      \node[draw,left of=code,xshift=-2em] (test) { Tests };
+      \node[draw,below of=code] (tool) { Analysis Tool };
+      \node[draw,below of=tool] (gentest) { Generated Tests };
+
+      \path[->] (test) edge[thick] (code);
+      \draw[thick, ->] (test) |-  (tool);
+      \path[->] (code) edge[thick] (tool);
+      \path[->] (tool) edge[thick] (gentest);
+\end{tikzpicture}
+\Large
+\end{center}
 \end{frame}
 
 \section{Conclusions}
