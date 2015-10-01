@@ -1,0 +1,18 @@
+\begin{lstlisting}
+  static final int [] filteringTypes = {
+    Attribute.NOMINAL, Attribute.STRING,
+    Attribute.NUMERIC, Attribute.DATE
+  };
+
+  public void testFiltering() {
+    for (int type : filteringTypes)
+      testFiltering(type);
+  }
+
+  public void testFiltering(final int type) {
+    m_Filter = getFilter(type);
+    Instances result = useFilter();
+    for (int i = 0; i < result.numAttributes(); i++)
+      assertTrue(result.attribute(i).type() != type);
+  }
+\end{lstlisting}

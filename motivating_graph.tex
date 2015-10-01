@@ -1,0 +1,62 @@
+\begin{figure}[ht!]
+   \centering
+\thesis{
+   \begin{tikzpicture}[
+         >=latex, 
+         node distance=4cm
+      ]
+}
+\paper{
+   \begin{tikzpicture}[
+         >=latex, 
+         node distance=3cm
+      ]
+}
+\slides{
+   \begin{tikzpicture}[
+         >=latex, 
+         node distance=2.5cm
+      ]
+      \scriptsize
+}
+
+      \node (0) [initial, block] {\tt // ...}; 
+      \node (1) [branch, below of=0, yshift=3.5em] {\predicate{i < result.numAttributes()}};
+      \node (2) [branch, below of=1] {
+         {\tt int type;}\\
+         {\tt /* type in }\\
+         {\tt * \{ Attribute.NOMINAL,}
+         {\tt Attribute.STRING,}\\
+         {\tt * ~~Attribute.NUMERIC,}
+         {\tt Attribute.DATE}
+         {\tt \}}\\
+         {\tt */}\\
+         \predicate{result.attribute(i).type() != type}
+      }; 
+      \node (3) [block, accepting, right of=1, xshift=3em] {}; 
+
+      \node (4) [merge, below of=2] {\tt assertTrue(boolean)}; 
+
+      \path[->]
+
+      (0) edge[thick] (1)
+
+      (1) edge[thick] node [left] {true} (2)
+          edge[thick] node [above] {false} (3)
+
+      (2) edge[thick, bend right=15] node [left] {true} (4)
+          edge[thick, bend left=15] node [right] {false} (4)
+
+      (4) edge[thick, bend right=85] (1)
+      ;
+
+   \end{tikzpicture}
+   \vspace{2pt}
+   \notslides{
+   \hrule
+   \caption{\label{fig:motivating_graph}
+      A control-flow graph for the example in Figure~\ref{fig:motivating_code}. 
+      Only assertions and predicates included.
+   }
+   }
+\end{figure}

@@ -1,0 +1,53 @@
+%setID: 37
+\begin{figure}[ht!]
+\begin{subfigure}[b]{\columnwidth}
+\begin{lstlisting}
+public void testNominalFiltering() {
+   m_Filter = getFilter(Attribute.NOMINAL);
+   Instances result = useFilter();
+   for (int i = 0; i < result.numAttributes(); i++)
+      assertTrue(result.attribute(i).type() != Attribute.NOMINAL);
+}
+\end{lstlisting}
+\end{subfigure}
+
+\begin{subfigure}[b]{\columnwidth}
+\begin{lstlisting}
+public void testStringFiltering() {
+   m_Filter = getFilter(Attribute.STRING);
+   Instances result = useFilter();
+   for (int i = 0; i < result.numAttributes(); i++)
+      assertTrue(result.attribute(i).type() != Attribute.STRING);
+}
+\end{lstlisting}
+\end{subfigure}
+
+\begin{subfigure}[b]{\columnwidth}
+\begin{lstlisting}
+public void testNumericFiltering() {
+   m_Filter = getFilter(Attribute.NUMERIC);
+   Instances result = useFilter();
+   for (int i = 0; i < result.numAttributes(); i++)
+      assertTrue(result.attribute(i).type() != Attribute.NUMERIC);
+}
+\end{lstlisting}
+\end{subfigure}
+
+\begin{subfigure}[b]{\columnwidth}
+\begin{lstlisting}
+public void testDateFiltering() {
+   m_Filter = getFilter(Attribute.DATE);
+   Instances result = useFilter();
+   for (int i = 0; i < result.numAttributes(); i++)
+      assertTrue(result.attribute(i).type() != Attribute.DATE);
+}
+\end{lstlisting}
+\end{subfigure}
+
+   \hrule
+   \caption
+   {\label{fig:motivating_code}
+   A clone set of four refactorable test method clones reported from Weka's test suite
+   ({\tt weka.filters.unsupervised.attribute.RemoveTypeTest}).}
+\end{figure}
+

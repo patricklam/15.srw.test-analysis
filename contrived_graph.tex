@@ -1,0 +1,91 @@
+   \begin{tikzpicture}[
+         >=latex, 
+         node distance=2cm
+      ]
+      \tiny
+
+      \node (0) [initial, branch] {
+         {\tt /*}
+         \\{\tt * line 3}
+         \\{\tt */}
+         \\\predicate{i < 10}
+      }; 
+      \node (1) [branch, right of=0, xshift=1.8cm] {
+         {\tt /*}
+         \\{\tt * line 4}
+         \\{\tt * bc:1 (\predicate{i<10})}
+         \\{\tt * inLoop:true}
+         \\{\tt */}
+         \\\predicate{i == 2}
+      }; 
+      \node (2) [try, below of=0, yshift=-1cm] {
+         {\tt try:}
+         \\{\tt /*}
+         \\{\tt * line 10}
+         \\{\tt * bc:1 ($\neg$\predicate{i<10})}
+         \\{\tt * es:1}
+         \\{\tt */}
+         \\{\tt fail(String)}
+      }; 
+
+      \node (3) [block, below of=1] {
+         {\tt /*}
+         \\{\tt * line 5}
+         \\{\tt * bc:2 (\predicate{i<10},\predicate{i==2})}
+         \\{\tt * inLoop:true}
+         \\{\tt */}
+         \\{\tt assertEquals(int, int)}
+      }; 
+      \node (4) [merge, below of=3, yshift=-.5cm] {
+         {\tt /*}
+         \\{\tt * line 6}
+         \\{\tt * bc:1 (\predicate{i<10})}
+         \\{\tt * mc:1 (\predicate{i==2})}
+         \\{\tt * inLoop:true}
+         \\{\tt */}
+         \\\predicate{i != 10}
+      };
+
+      \node (5) [catch, below of=2, yshift=-1cm] {
+         {\tt catch:}
+         \\{\tt /*}
+         \\{\tt * line 12}
+         \\{\tt * bc:1 ($\neg$\predicate{i<10})}
+         \\{\tt * inCatch:true}
+         \\{\tt */}
+         \\{\tt assertEquals(int, int)} }; 
+
+      \node (7) [merge, below of=4, yshift=-1cm] {
+         {\tt /*}
+         \\{\tt * line 6}
+         \\{\tt * bc:1 (\predicate{i<10})}
+         \\{\tt * mc:2 (\predicate{i==2},\predicate{i!=10})}
+         \\{\tt * inLoop:true}
+         \\{\tt */}
+         \\{\tt assertTrue(boolean)}
+      };
+
+      \node (6) [accepting, block, below of=5, yshift=-.3cm] {}; 
+
+      \path[->]
+
+      (0) edge[thick] node [above] {true} (1)
+          edge[thick] node [right] {false} (2)
+
+      (1) edge[thick] node [left] {true} (3)
+          edge[thick, bend left=47] node [right] {false} (4)
+
+      (2) edge[thick, dashed] node [right] {Exception} (5)
+          edge[thick, bend right=47] (6)
+
+      (3) edge[thick] (4)
+
+      (4) edge[thick, bend right=10] node [left] {true} (7)
+          edge[thick, bend left=10] node [right] {false} (7)
+
+      (7) edge[thick, out=130, in=320] (0)
+
+      (5) edge[thick] (6)
+      ;
+
+   \end{tikzpicture}

@@ -1,0 +1,16 @@
+\begin{lstlisting}
+public void test() {
+   int i;
+   for (i = 0; i < 10; ++i) {
+      if (i == 2)
+         assertEquals(i, 2);
+      assertTrue(i != 10);
+   }
+   try {
+      throw new Exception();
+      fail("Should have thrown exception");
+   } catch (final Exception e) {
+      assertEquals(i, 10);
+   }
+}
+\end{lstlisting}

@@ -1,0 +1,18 @@
+The code in Figure~\ref{fig:contrived_code}, and its CFG in
+Figure~\ref{fig:contrived_graph}, 
+illustrate all five components of a fingerprint. For expository reasons, we have included fingerprints for each vertex $v$ in Figure~\ref{fig:contrived_graph} (even though only fingerprints for assertion invocations matter for our technique).
+
+Observe that
+%{\tt assertEquals(int, int)} (line 5) has a branch count of 2 (\predicate{i < 10} and \predicate{i == 2}); 
+%{\tt assertTrue(boolean)} (line 6) has a branch count of 1 (\predicate{i < 10}) and merge count of 2 (\predicate{i == 2} and \predicate{i != 10});
+%{\tt fail(String)} (line 10) has a branch count of 1 ($\neg$\predicate{i < 10}) and 1 exceptional successor (one corresponding catch block); 
+%{\tt assertEquals(int, int)} (line 12) has a branch count of 1 ($\neg$\predicate{i < 10}), a merge count of 1 (\predicate{i > 10}), and is in a catch block.
+%The calls {\tt assertEquals(int, int)} (line 5) and {\tt
+%assertTrue(boolean)} (line 6) are in a loop (for loop at line 3).
+the branch vertex at line 3 (\predicate{i < 10}) increments the branch count for its successors at line 4 and 5 (inside the for loop) and those at line 10 and 12 (outside the for loop).
+Line 6 has two merges: one from \predicate{i == 2} and the other from \predicate{i != 10}.
+Although line 10 ({\tt fail(String)}) is actually unreachable and hence does not throw any exceptions, Soot includes its exceptional successors anyway.
+%line 5 and 6 being in loops and line 12 being in a catch block for obvious reasons.
+
+\input{contrived_code}
+\input{contrived_graph}

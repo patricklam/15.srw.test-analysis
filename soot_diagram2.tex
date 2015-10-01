@@ -1,0 +1,28 @@
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.45cm,semithick,initial text=]
+
+  \node[block]   (ca)                {@Test A()};
+  \node[block]   (cb) [below of=ca]  {@Test B()};
+  \node[block]   (cc) [below of=cb]  {@Test C()};
+  \node[block]   (s)  [right of=cb, xshift=2.8em]  {~~~Soot~~~};
+
+  \node[block]   (cfa) [right of=ca,xshift=7.8em]  {CFG(A)};
+  \node[block]   (cfb) [right of=cb,xshift=7.8em]  {CFG(B)};
+  \node[block]   (cfc) [right of=cc,xshift=7.8em]  {CFG(C)};
+
+  \node[block,fill=yellow!20]   (afa) [right of=ca,xshift=15em] {\small [fingerprint(A)]};
+  \node[block,fill=red!20]   (afb) [right of=cb,xshift=15em]  {\small [fingerprint(B)]};
+  \node[block,fill=yellow!20]   (afc) [right of=cc,xshift=15em] {\small [fingerprint(C)]};
+
+  \path (ca) edge              node {} (s)
+        (cb) edge              node {} (s)
+        (cc) edge              node {} (s);
+
+  \path (s) edge              node {} (cfa)
+        (s) edge              node {} (cfb)
+        (s) edge              node {} (cfc);
+
+  \path (cfa) edge              node {} (afa)
+        (cfb) edge              node {} (afb)
+        (cfc) edge              node {} (afc);
+
+\end{tikzpicture}

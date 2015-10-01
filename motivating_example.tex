@@ -1,0 +1,51 @@
+The goal of our analysis is to report clone sets which are candidates
+for refactoring by the developer.  
+Our primary
+assumption is that assertions are frequently a key part of test
+methods. Therefore, assertion characteristics
+help us understand the structure and
+semantics of test methods, and we can use that understanding to detect clones.
+
+Intuitively, our analysis aims to declare that $m_1$ is a clone of
+method $m_2$ if they are similar in terms of control flow and
+assertion/fail calls.
+
+Consider, as an example, Figure~\ref{fig:motivating_code}, from a clone set reported by our
+analysis. The full set contains 4 similar methods from Weka's test
+suite.  Manual inspection confirms that these methods are
+indeed clones.  Figure~\ref{fig:motivating_refactored}
+shows one plausible refactoring of the code from
+Figure~\ref{fig:motivating_code}. While, after refactoring, individual tests become
+more complicated to understand, we argue that the suite of 4 refactored tests 
+is collectively easier to understand and maintain.
+
+Our analysis identifies the clone set in Figure~\ref{fig:motivating_code} by
+matching fingerprints from the assertion invocations in the methods. 
+In this case, all four test methods only have one assertion invocation, {\tt assertTrue(boolean)}. 
+
+We next compute assertion fingerprints for each of the assertions.  
+Assertion fingerprints consist of 5 components; we illustrate 
+branch counts and merge counts here. Each assertion is reachable
+from its method start through a single branch, \predicate{i <
+result.numAttributes()}, and thus has a branch count of 1. Furthermore,
+there is an implicit branch and merge in the boolean comparison in the
+assertion parameter (\predicate{.type() != ...}), which leads to a merge
+count of 1 for each assertion. Finally, these assertions are not in loops,
+catch blocks, or caught by exception handlers. This gives assertion
+fingerprints \predicate{(bc:1, mc:1)} for all asserts.
+
+Because all four of the test methods share the same ordered set of
+assertion fingerprints, and no other methods have the same
+fingerprints, our technique reports that the test methods in
+Figure~\ref{fig:motivating_code} make up a clone set.
+
+\thesis{
+\input{motivating_code_thesis}
+}
+\paper{
+\input{motivating_code_paper}
+}
+
+\input{motivating_graph}
+
+\input{motivating_refactored}

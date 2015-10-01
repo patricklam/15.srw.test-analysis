@@ -1,0 +1,43 @@
+
+\notslides{
+\begin{table*}[t]
+   \caption{\label{tab:stats_compares_af}How Bauhaus performed against Assertion Fingerprints---45\% of clone sets from Assertion Fingerprints were not detected by Bauhaus.}
+}
+   {
+
+\thesis{\begin{adjustwidth}{-15pt}{}}
+\paper{\begin{adjustwidth}{-15pt}{}}
+
+      \begin{tabular}{r@{\quad}
+         rrrr|
+         r
+      }
+
+         & \multicolumn{4}{c|}{Clone sets also detected by Bauhaus}
+         & \multirow{2}{*}{\begin{minipage}{10em}\begin{flushright}Clone sets not\\detected by Bauhaus\end{flushright}\end{minipage}}
+         \\
+         & Type~1 & Type~2 & Type~3 & Total
+         &
+         \\
+         & & & &
+         &
+         \\
+                  Apache POI & 40 & 6 & 8 & 54 & 131 \\
+         Commons Collections & 88 & 5 & 18 & 111 & 55 \\
+         Google Visualization & 11 & 1 & 0 & 12 & 23 \\
+         HSQLDB & 19 & 11 & 4 & 34 & 31 \\[0.5em]
+         JDOM & 0 & 0 & 0 & 0 & 29 \\
+         JFreeChart & 49 & 9 & 36 & 94 & 52 \\
+         JGraphT & 2 & 2 & 2 & 6 & 5 \\
+         JMeter & 31 & 5 & 9 & 45 & 15 \\[0.5em]
+         Joda-Time & 85 & 18 & 39 & 142 & 89 \\
+         Weka & 28 & 5 & 4 & 37 & 13 \\[0.7em]
+         {\bf Total} & 353 & 62 & 120 & 535 & 443 \\
+         
+      \end{tabular}
+
+      \thesis{\end{adjustwidth}}
+      \paper{\end{adjustwidth}}
+      
+   }
+\notslides{\end{table*}}

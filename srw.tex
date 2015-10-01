@@ -32,6 +32,73 @@
    \tikz[baseline,overlay]\node[every overlay node]
 }%
 
+\usepackage{pgfplots}
+\usetikzlibrary{automata,arrows}
+\tikzstyle{block}=[
+   rectangle,
+   rounded corners=2mm,
+   thick,
+   draw=blue!80,
+   fill=blue!20,
+   align=left,
+   minimum size=1cm
+]
+
+\tikzstyle{branch}=[
+   rectangle,
+   rounded corners=2mm,
+   thick,
+   draw=red!80,
+   fill=red!20,
+   align=left,
+   minimum size=1cm
+]
+
+\tikzstyle{merge}=[
+   rectangle,
+   rounded corners=2mm,
+   thick,
+   draw=yellow!80,
+   fill=yellow!20,
+   align=left,
+   minimum size=1cm
+]
+
+\tikzstyle{try}=[
+   rectangle,
+   rounded corners=2mm,
+   thick,
+   draw=violet!80,
+   fill=violet!20,
+   align=left,
+   minimum size=1cm
+]
+
+\tikzstyle{catch}=[
+   rectangle,
+   rounded corners=2mm,
+   thick,
+   draw=green!80,
+   fill=green!20,
+   align=left,
+   minimum size=1cm
+]
+
+\usepackage{listings}
+\lstset{
+   language=java, 
+   basicstyle=\ttfamily,
+   columns=fullflexible,
+   breaklines=true,
+   numbers=left,
+   numberstyle=\scriptsize,
+   stepnumber=1,
+   mathescape=false,
+   tabsize=2,
+   showstringspaces=false
+}
+\usepackage{inconsolata}
+\newcommand{\predicate}[1] {{\tt \{#1\}}}
 %\setbeamercovered{dynamic}
 \setbeamertemplate{footline}[page number]{}
 \setbeamertemplate{navigation symbols}{}
@@ -163,6 +230,9 @@ Soundiness:
 
 \begin{frame}
   \frametitle{Concolic analysis}
+
+Run the program with arbitrary inputs, \\
+use search to find new inputs/new paths.
 \end{frame}
 
 \begin{frame}
@@ -170,11 +240,11 @@ Soundiness:
 
 Phantm
 \begin{center}
-\includegraphics[width=\textwidth]{images/phantm-blue-solid.png}
+\includegraphics[width=.2\textwidth]{images/phantm-blue-solid.png}
 \end{center}
 \begin{itemize}
 \item Run the program, observe the configuration loading phase.
-\item Use the config to analyze the remainder of the program.
+\item Use the config to do type analysis on the remainder of the program.
 \end{itemize}
 \end{frame}
 
@@ -182,8 +252,15 @@ Phantm
   \frametitle{TamiFlex}
 
 \begin{center}
-\includegraphics[width=\textwidth]{images/tamiflex.png}
+\includegraphics[width=.2\textwidth]{images/tamiflex.png}
 \end{center}
+
+
+\begin{itemize}
+\item observe reflective and classes loaded through custom class loaders
+\end{itemize}
+
+Needs test inputs to exercise the program.
 \end{frame}
 
 \begin{frame}
@@ -194,19 +271,692 @@ Phantm
 \end{center}
 \end{frame}
 
+\section{Empirical Studies}
+
 \begin{frame}
-  \frametitle{Empirical Studies}
+  \frametitle{Relative Sizes of Test Suites}
+\begin{center}
+\includegraphics[width=\textwidth, height=.8\textheight, keepaspectratio=true]{images/test-vs-system.png}
+\end{center}
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=1cm,yshift=1.3cm] at (current page.center)
+{
+m=0.3002
+};
+\node [xshift=1.5cm,yshift=-1.6cm] at (current page.center)
+{
+m=0.03514
+};
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Properties of Test Suites}
-  (GTAC 2014)
+  \frametitle{Complexity of Test Suites}
+\begin{center}
+\includegraphics[width=\textwidth, height=.8\textheight, keepaspectratio=true]{images/five-asserts.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\% Tests with control-flow}
+\begin{center}
+\includegraphics[width=\textwidth, height=.8\textheight, keepaspectratio=true]{images/control-flow.png}
+\end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{Similar Test Methods}
   (PPPJ 2015)
 \end{frame}
+
+\begin{frame}
+  \frametitle{Story: Writing Widget class} {\small	
+     \includegraphics[width=\textwidth, keepaspectratio=true]{images/Programmer_writing_code_with_Unit_Tests.jpg}
+     \tiny
+     \linebreak
+     By Joonspoon (Own work) [CC BY-SA 4.0 (\url{http://creativecommons.org/licenses/by-sa/4.0})], via Wikimedia Commons
+  }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Story: Writing Widget class}
+  {
+     \begin{tabular}{ll}
+        \begin{minipage}{0.4\textwidth}
+\begin{lstlisting}[]
+class FooWidget extends Widget { 
+    /*...*/ 
+}
+
+class BarWidget extends Widget { 
+    /*...*/ 
+}
+\end{lstlisting}
+        \end{minipage}
+        &
+        \begin{minipage}{0.4\textwidth}
+\begin{lstlisting}[]
+@Test
+class FooWidgetTest { 
+    /*...*/ 
+}
+
+@Test
+class BarWidgetTest { 
+    /*...*/ 
+}
+\end{lstlisting}
+        \end{minipage}
+     \end{tabular}
+  }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Story: Writing New Code}
+     \begin{tabular}{ll}
+        \begin{minipage}{0.4\textwidth}
+\begin{lstlisting}[]
+class BazWidget extends Widget { 
+    /* New Code */ 
+}
+\end{lstlisting}
+        \end{minipage}
+        &
+        \begin{minipage}{0.4\textwidth}
+\begin{lstlisting}[]
+@Test
+class BazWidgetTest { 
+    /* ? */ 
+}
+\end{lstlisting}
+        \end{minipage}
+     \end{tabular}
+  
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Story: Writing New Code}
+     \begin{tabular}{ll}
+        \begin{minipage}{0.4\textwidth}
+\begin{lstlisting}[]
+class BazWidget extends Widget { 
+    /* New Code */ 
+}
+\end{lstlisting}
+        \end{minipage}
+        &
+        \begin{minipage}{0.4\textwidth}
+\begin{lstlisting}[]
+@Test
+class BazWidgetTest { 
+/* Ctrl-C, Ctrl-V */ 
+}
+\end{lstlisting}
+        \end{minipage}
+     \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hypothesis} {\small	
+     \vspace*{-1em}
+     \Large
+     \begin{itemize}
+        \item Developers often copy-paste tests \\(and probably enjoy doing it)
+           \vspace{0.5cm}
+        \item Why? JUnit test cases tend to be self-contained
+           \vspace{1cm}
+        \item Test clones can become difficult to comprehend or maintain later
+     \end{itemize}
+	}
+\end{frame}
+\note{
+(Show of hands: Who has ever copy-pasted tests before?)
+Developers frequently copy-paste tests. It is the easier way to write a bunch of more tests to provide more test coverage. 
+Test code is also often overlooked in code review, so those who copy-pasted the tests usually got away with it.
+It could have also started with the senior engineers copy-pasting tests, then the others just follow the same bad practice.
+(Sometimes I do it too.)
+
+Copy-pasted tests can gradually become extremely difficult to maintain and reduce productivity (if you change the system's behavior, you'd have to update the tests too).
+
+Sometimes there are engineers who would like to help the team out and mitigate the test clone nightmare, but she/he do know where/how to start.
+
+Therefore, the purpose of our research is to help the engineers identify not just test clones, but test refactoring candidates to improve the quality and maintainability of tests.
+}
+
+\begin{frame}
+  \frametitle{Benefits of Refactoring Tests} {\small	
+     \vspace*{-1em}
+     \Large
+     \begin{itemize}
+        \item xUnit Test Patterns: Refactoring Test Code (Meszaros)
+           \vspace{0.5cm}
+        \item Reduce long term maintenance cost (Saff)
+           \vspace{0.5cm}
+        \item Can detect new defects and increase branch coverage if tests are parametrized (Thummalapenta et al)
+           \vspace{0.5cm}
+        \item Reduce brittleness and improve ease of understanding
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Refactoring Techniques} {\small	
+     \vspace*{-1em}
+     \Large
+     \begin{itemize}
+        \item Language features such as inheritance or generics
+           \vspace{0.5cm}
+        \item Parametrized Unit Tests and Theories
+     \end{itemize}
+	}
+\end{frame}
+\note{
+}
+
+\begin{frame}
+  \frametitle{Refactoring Example} {\small	
+     \input{motivating_code_paper}
+	}
+\end{frame}
+\note{
+Here is a motivating example. 
+The two test methods belong to a refactoring candidate set reported by our analysis. 
+
+By inspection, the two methods are obviously clones, and refactorable as well by parametrizing the methods and using different filtering types. 
+There are two more candidates in the set, NUMERIC and DATE, and also refactorable.
+
+This example, however, can be missed by a typical clone detector that uses a token threshold because the number of contiguous identical tokens in this example could possibly be not above the threshold.
+}
+
+\begin{frame}
+  \frametitle{Refactored Example} {\small	
+     \input{motivating_refactored}
+	}
+\end{frame}
+\note{
+As mentioned previously, this example can be refactored by parametrizing the methods and theorizing data points.
+}
+
+\begin{frame}
+  \frametitle{Our Contributions} {
+     \Large
+     \begin{itemize}
+        \item Test refactoring candidate detection technique using {\em Assertion Fingerprints}
+           \vspace{0.5cm}
+        \item Empirical and qualitative analyses of results on 10 Java benchmarks
+     \end{itemize}
+	}
+\end{frame}
+\note{
+The main contributions of this paper include devising a test refactoring candidate detection technique using Assertion Fingerprints, 
+and empirical and qualitative analyses of 10 Java benchmark test suites, of which programs have distinct applications including 
+graph theories, machine learning, and data structures.
+}
+
+\begin{frame}
+  \frametitle{What is a test case made of?} {\small	
+     \vspace*{-1em}
+     \Large
+     \begin{itemize}
+        \item Setup
+           \vspace{0.5cm}
+        \item Run/Exercise
+           \vspace{0.5cm}
+        \item \alert<2>{Verify}
+           \vspace{0.5cm}
+        \item Teardown
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Key Insight} {\small	
+     \Large
+     Similar tests often have similar sets of asserts
+	}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Similar Sets of Asserts: Example} {\small	
+     \begin{tabular}{ll}
+        \begin{minipage}{0.51\textwidth}
+\begin{lstlisting}[]
+public void test1() {
+   /* ... */
+   assertEqual(int, int);
+   /* ... */
+   assertEqual(float, float);
+   /* ... */
+   assertTrue(boolean);
+}
+\end{lstlisting}
+        \end{minipage}
+        &
+        \begin{minipage}{0.51\textwidth}
+\begin{lstlisting}[]
+public void test2() {
+   /* ... */
+   assertEqual(int, int);
+   /* ... */
+   assertEqual(float, float);
+   /* ... */
+   assertTrue(boolean);
+}
+\end{lstlisting}
+        \end{minipage}
+     \end{tabular}
+	}
+\end{frame}
+\note{}
+
+\begin{frame}
+  \frametitle{Our Approach} {\small	
+     \hspace*{3em}
+     \Huge
+     Assertion Fingerprints
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Assertion Fingerprints} {
+     \Large
+     Augment set of assertions. \\
+     \vspace{0.5cm}
+
+     For each assertion call, collect:
+     \vspace{0.5cm}
+
+     \begin{itemize}
+        \item Parameter types
+           \vspace{0.5cm}
+        \item {\bf Control flow components}
+           \vspace{0.5cm}
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Using Assertion Fingerprints} {
+     \Large
+     Match test methods with same ordered sets of \\
+     \vspace{0.5cm}
+     assertion fingerprints.
+	}
+\end{frame}
+\note{
+Since assertions form a fundamental part of the structure of JUnit tests, we would like to place a strong focus on them.
+We compute Assertion Fingerprints by collecting, for each JUnit assert/fail call, the parameter types, and most importantly, 5 control flow components.
+We partition the test methods by the exact same ordered set of assertion fingerprints and report each partition as a clone set.
+}
+
+\begin{frame}
+  \frametitle{Assertion Fingerprints: Control Flow Components} {
+     \Large
+     \begin{itemize}
+        \item Branch Count (Branch Vertices)
+           \vspace{0.5cm}
+        \item Merge Count (Merge Vertices)
+           \vspace{0.5cm}
+        \item In Loop Flag (Depth First Traversal)
+           \vspace{0.5cm}
+        \item Exceptional Successor Count (Exceptional CFG)
+           \vspace{0.5cm}
+        \item In Catch Block Flag (Dominator Analysis)
+     \end{itemize}
+	}
+\end{frame}
+\note{
+The 5 control flow components consider normal control flows such as
+branching and loops. We approximate the control flow information
+and record number of branch vertices, merge vertices, and boolean flag
+of whether the assertion call is in a loop (by depth first traversal)
+or not.
+
+We also consider exceptional control flow edges because we discovered
+that using try catch blocks in tests is quite common some test suites; 
+test suites such as JDOM's include tests that verify if a statement is expected to
+throw exceptions and therefore use try catch blocks to construct such
+tests. We collect number of exceptional successors for each assertion; 
+an exceptional successor count greater than 0 means that the assertion
+call is in a try block and have 1 or more number of corresponding
+catch blocks.
+We also use dominator analysis to detect if an assertion call is in a catch
+block.
+}
+
+\begin{frame}
+  \frametitle{Example: Code} {\small	
+     \input{contrived_code}
+	}
+\end{frame}
+\note{
+Here is a contrived but comprehensive example that covers all 5
+control flow components. 
+By inspection, one can see that the first two
+assertion calls are in a loop, whereas the last two are not.
+Also, the fail call obviously is in a try block and has 1 exceptional
+successor; the last assertion call is in a catch block. It is
+difficult to measure what the branch and merge counts are.
+Therefore, the next slide is the control flow graph of this example.
+}
+
+\begin{frame}
+  \frametitle{Example: CFG} {\Large	
+     \vspace*{-1em}
+     \input{contrived_graph}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{Branch Count} {\Large	
+     \begin{itemize}
+        \item An assertion inside an if statement is likely to be different from one that is not.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: CFG} {\Large	
+     \vspace*{-1em}
+     \input{contrived_graph}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{Branch Count} {\Large	
+     \begin{itemize}
+        \item Minimal number of branches needed to reach that vertex from the start of a method, excluding {\tt n}.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{Merge Count} {\Large	
+     \begin{itemize}
+        \item An assertion with some prior operations inside an if statement is likely to be different from one that is not with any.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: CFG} {\Large	
+     \vspace*{-1em}
+     \input{contrived_graph}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{Merge Count} {\Large	
+     \begin{itemize}
+        \item Minimal number of merge vertices needed to reach vertex {\tt n} from the start of the method, including {\tt n}.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{In Loop Flag} {\Large	
+     \begin{itemize}
+        \item An assertion inside a loop is likely to be different from one that is not.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: CFG} {\Large	
+     \vspace*{-1em}
+     \input{contrived_graph}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{Exceptional Successors Count} {\Large	
+     \begin{itemize}
+        \item An assertion inside a try block with corresponding catch block(s) is likely to be different from one that is not.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: CFG} {\Large	
+     \vspace*{-1em}
+     \input{contrived_graph}
+	}
+\end{frame}
+
+\begin{frame}
+   \frametitle{In Catch Block Flag} {\Large	
+     \begin{itemize}
+        \item An assertion inside a catch block is likely to be different from one that is not.
+     \end{itemize}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: CFG} {\Large	
+     \vspace*{-1em}
+     \input{contrived_graph}
+	}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: Fingerprints} {\Large	
+     \begin{enumerate}
+        \item {\tt assertEquals(int, int)} (line 5)
+           \begin{itemize}
+              \item bc:2, inLoop:true
+           \end{itemize}
+           \vspace{0.5cm}
+        \item {\tt assertTrue(boolean)} (line 6)
+           \begin{itemize}
+              \item bc:1, mc:1, inLoop:true
+           \end{itemize}
+           \vspace{0.5cm}
+        \item {\tt fail(String)} (line 10)
+           \begin{itemize}
+              \item bc:1, es:1
+           \end{itemize}
+           \vspace{0.5cm}
+        \item {\tt assertEquals(int, int)} (line 12)
+           \begin{itemize}
+              \item bc:1, inCatch:true
+           \end{itemize}
+     \end{enumerate}
+	}
+\end{frame}
+\note{
+This is a summary of the assertion fingerprints, including the method signatures and approximated control flow information. 
+The assertion fingerprints are organized in the ordered set in the same order they appear in the code. 
+We find other methods that have the exact same ordered set of assertion fingerprints and report them as clones.
+}
+
+\begin{frame}
+\frametitle{Filtering: Must satisfy one of the following} {
+   \Large
+   \begin{itemize}
+      \item Contain some control flow
+         \vspace{0.5cm}
+      \item Contain more than 4 assertions
+         \vspace{0.5cm}
+      \item Heterogeneous in signature \\(invoke different assertion types)
+   \end{itemize}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation: Implementation} {
+   \Large
+   \hspace{-1.5em}
+   \input{soot_diagram}
+   }
+\end{frame}
+\note{
+Our implementation uses the Soot framework to statically analyze test suites, generate assertion fingerprints, and compute refactoring candidates set. 
+Soot provides a control-flow graph over three-address code for each method. 
+Soot also provides function for computing useful properties such as dominators.
+}
+
+\begin{frame}
+\frametitle{Evaluation: Implementation} {
+   \Large
+   \hspace{-1.5em}
+   \input{soot_diagram2}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation: Benchmarks} {
+   \centering
+   \input{table_info}
+   }
+\end{frame}
+\note{
+Here we briefly describe each benchmark suites, all open-source projects with test suites.
+
+Apache POI: Java API for Microsoft Documents
+Common Collections: Implementation of Collections data structures
+Google Visualization: Data visualization framework
+HSQLDB: Relational database
+JDOM: Java API for manipulating XML data
+JFreeChart: Charting library
+JGraphT: Graph theory objects and algorithms
+JMeter: Performance testing and measurement framework
+Joda-Time: Date and time library
+Weka: Machine learning framework
+}
+
+\begin{frame}
+\frametitle{Evaluation: Analysis Run Time (seconds)} {
+   \centering
+     \input{table_runtime}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Results: Detected Refactoring Candidates} {
+   \includegraphics[width=\textwidth, keepaspectratio=true]{images/percent_method_in_set.png}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Results: Asserts vs Methods distribution} {
+   \hspace*{0em}
+%     \input{scatter_plot}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Results: Sampling, 75\% True Positive rate} {
+   \includegraphics[width=\textwidth, keepaspectratio=true]{images/percent_true_positives.png}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Results: vs {\tt ccdiml} (Bauhaus), 45\% missed} {
+   \includegraphics[width=\textwidth, keepaspectratio=true]{images/percent_not_ccdiml.png}
+   }
+\end{frame}
+
+\begin{frame}
+\frametitle{Qualitative Analysis: JGraphT} {
+   \Large
+     \begin{itemize}
+        \item Small and heterogenous tests that are unlikely to be false positives
+     \end{itemize}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Qualitative Analysis: Joda-Time} {
+   \Large
+     \begin{itemize}
+        \item Wide hierarchy of tests with identical structures and straight-line assertions.
+     \end{itemize}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Qualitative Analysis: Weka, Apache Commons Collections} {
+   \Large
+   \begin{itemize}
+      \item Textually identical clones of methods with similar data types
+         but with different environment setups.
+   \end{itemize}    
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Qualitative Analysis: JDOM} {
+\begin{figure}[ht!]
+\begin{lstlisting}
+public void test_TCC___String() {
+  // [... 4x assertTrue(String, boolean)]
+  try {
+    // ...
+    fail("allowed creation of an element with no name");
+  } catch (IllegalNameException e) { 
+    // Test passed!
+  }
+}
+\end{lstlisting}
+\end{figure}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Qualitative Analysis: Google Visualization} {
+   \Large
+   \begin{itemize}
+      \item Complex query-related statements and helper methods reduce
+         the roles of assertions in a test method, 
+         resulting in a below-average true positive rate.
+   \end{itemize}    
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Qualitative Analysis: Refactorability} {
+   \Large
+   \begin{itemize}
+      \item Clones that show structural similarities are most likely amenable to
+         refatoring, however;
+         \vspace{0.5cm}
+      \item Non-parametrized and small clones are diffcult to refactor.
+   \end{itemize}    
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Limitations: Things not Considered} {
+     \Large
+     \begin{itemize}
+        \item Assertion Arguments
+           \vspace{0.5cm}
+        \item Helper Methods
+           \vspace{0.5cm}
+     \end{itemize}    
+   }
+\end{frame}
+\note{
+The limitations of our technique include not considering assertion
+arguments and helper methods. Being oblivious to assertion arguments
+increases our false positive rates but also helps us detect more
+clones (a Precision vs Recall tradeoff situation). Our technique
+is also unaware of helper methods that play major roles in some
+test methods, but we argue that those methods are most likely already
+refactored and less likely worth the effort to refactor.
+}
+
+\begin{frame}
+  \frametitle{Conclusions} {
+     \Large
+     \begin{itemize}
+        \item We partitioned test methods by ordered sets of \mbox{\em Assertion Fingerprints}.
+           \vspace{0.5cm}
+        \item Assertion Fingerprints reported that 39\% test methods in the 10 benchmark test suites are clones with an estimated 75\% true positive rate.
+     \end{itemize}   
+	}
+\end{frame}
+
 
 \section{Future Perspectives}
 
