@@ -317,6 +317,23 @@ use solver to find new paths/inputs.
 \end{frame}
 
 \begin{frame}
+  \frametitle{Dependent Array Type Inference from Tests (Zhu, Nori \& Jagannathan)}
+
+\begin{changemargin}{1cm}
+\Large
+Goal: learn quantified array invariants.\\[1em]
+
+Approach: observe from test runs; namely:
+\begin{itemize}
+\item guess coarse templates;
+\item run with simple random tests;
+\item generate constraints;
+\item validate types.
+\end{itemize}
+\end{changemargin}
+\end{frame}
+
+\begin{frame}
   \frametitle{DSD-Crasher (Csallner and Smaragdakis)}
 
 \begin{center}
@@ -819,36 +836,36 @@ Therefore, the next slide is the control flow graph of this example.
 	}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Example: Fingerprints} {\Large	
-     \begin{enumerate}
-        \item {\tt assertEquals(int, int)} (line 5)
-           \begin{itemize}
-              \item bc:2, inLoop:true
-           \end{itemize}
-           \vspace{0.5cm}
-        \item {\tt assertTrue(boolean)} (line 6)
-           \begin{itemize}
-              \item bc:1, mc:1, inLoop:true
-           \end{itemize}
-           \vspace{0.5cm}
-        \item {\tt fail(String)} (line 10)
-           \begin{itemize}
-              \item bc:1, es:1
-           \end{itemize}
-           \vspace{0.5cm}
-        \item {\tt assertEquals(int, int)} (line 12)
-           \begin{itemize}
-              \item bc:1, inCatch:true
-           \end{itemize}
-     \end{enumerate}
-	}
-\end{frame}
-\note{
-This is a summary of the assertion fingerprints, including the method signatures and approximated control flow information. 
-The assertion fingerprints are organized in the ordered set in the same order they appear in the code. 
-We find other methods that have the exact same ordered set of assertion fingerprints and report them as clones.
-}
+%% \begin{frame}
+%%   \frametitle{Example: Fingerprints} {\Large	
+%%      \begin{enumerate}
+%%         \item {\tt assertEquals(int, int)} (line 5)
+%%            \begin{itemize}
+%%               \item bc:2, inLoop:true
+%%            \end{itemize}
+%%            \vspace{0.5cm}
+%%         \item {\tt assertTrue(boolean)} (line 6)
+%%            \begin{itemize}
+%%               \item bc:1, mc:1, inLoop:true
+%%            \end{itemize}
+%%            \vspace{0.5cm}
+%%         \item {\tt fail(String)} (line 10)
+%%            \begin{itemize}
+%%               \item bc:1, es:1
+%%            \end{itemize}
+%%            \vspace{0.5cm}
+%%         \item {\tt assertEquals(int, int)} (line 12)
+%%            \begin{itemize}
+%%               \item bc:1, inCatch:true
+%%            \end{itemize}
+%%      \end{enumerate}
+%% 	}
+%% \end{frame}
+%% \note{
+%% This is a summary of the assertion fingerprints, including the method signatures and approximated control flow information. 
+%% The assertion fingerprints are organized in the ordered set in the same order they appear in the code. 
+%% We find other methods that have the exact same ordered set of assertion fingerprints and report them as clones.
+%% }
 
 \begin{frame}
 \frametitle{Filtering: Must satisfy one of the following} {
@@ -917,11 +934,11 @@ Weka: Machine learning framework
    }
 \end{frame}
 
-\begin{frame}
-\frametitle{Results: vs {\tt ccdiml} (Bauhaus), 45\% missed} {
-   \includegraphics[width=\textwidth, keepaspectratio=true]{images/percent_not_ccdiml.png}
-   }
-\end{frame}
+%% \begin{frame}
+%% \frametitle{Results: vs {\tt ccdiml} (Bauhaus), 45\% missed} {
+%%    \includegraphics[width=\textwidth, keepaspectratio=true]{images/percent_not_ccdiml.png}
+%%    }
+%% \end{frame}
 
 \begin{frame}
 \frametitle{Qualitative Analysis: JGraphT} {
@@ -982,10 +999,10 @@ public void test_TCC___String() {
 \frametitle{Qualitative Analysis: Refactorability} {
    \Large
    \begin{itemize}
-      \item Clones that show structural similarities are most likely amenable to
+      \item Test methods that show structural similarities are most likely amenable to
          refatoring, however;
          \vspace{0.5cm}
-      \item Non-parametrized and small clones are diffcult to refactor.
+      \item Non-parametrized and small methods are diffcult to refactor.
    \end{itemize}    
 }
 \end{frame}
@@ -995,16 +1012,15 @@ public void test_TCC___String() {
 
 \begin{center}
 \Large
-Test refactoring.
+Guided test refactoring.
 \end{center}
 \end{frame}
 
 
 \section{Future Perspectives}
 
-
 \begin{frame}
-  \frametitle{What We Can Do With Tests?}
+  \frametitle{What Do We Do With Tests?}
 \begin{changemargin}{1cm}
 \Large
 Tradtionally: \\
@@ -1015,12 +1031,38 @@ Tradtionally: \\
 \end{frame}
 
 \begin{frame}
-  \frametitle{Our usual interaction with tests}
+  \frametitle{Our usual interaction with tests (static)}
 
 \begin{center}
 \begin{tikzpicture}
       \node[draw] (code) { Program };
-      \node[draw,left of=code,xshift=-2em] (test) { Tests };
+      \node[draw,left of=code,xshift=-2em,color=gray!80] (test) { Tests };
+      \node[draw,below of=code] (tool) { Analysis Tool };
+      \node[draw,below of=tool] (gentest) { Generated Tests };
+
+      \path[->,color=gray,dotted] (test) edge[thick] (code);
+      \path[->] (code) edge[thick] (tool);
+      \path[->] (tool) edge[thick] (gentest);
+\end{tikzpicture}
+\Large
+~\\[1em]
+Statically, we usually just ignore tests.
+\end{center}
+%\Large
+%\begin{changemargin}{1cm}
+%Test Generation:
+
+%Write-only. Output from static analysis.
+%\end{changemargin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Our usual interaction with tests (dynamic)}
+
+\begin{center}
+\begin{tikzpicture}
+      \node[draw] (code) { Program };
+      \node[draw,above of=code] (test) { Tests };
       \node[draw,below of=code] (tool) { Analysis Tool };
       \node[draw,below of=tool] (gentest) { Generated Tests };
 
@@ -1057,6 +1099,45 @@ Tests are write-only with respect to the tool.
 \end{tikzpicture}
 \Large
 \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Why is it hard to write tests?}
+
+\begin{changemargin}{1cm}
+\Large
+
+Need to:
+\begin{enumerate}
+\item get system under test in appropriate state;
+\item decide what the right answer is.
+\end{enumerate}
+~\\
+
+Useful hints for static analysis!
+\end{changemargin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unit tests also illustrate\ldots}
+
+\begin{changemargin}{1cm}
+\Large
+\begin{itemize}
+\item interesting points in execution space, with
+\item complete execution environments \\ \hspace*{2em} for program fragments.
+\end{itemize}
+\end{changemargin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Challenges}
+
+\begin{changemargin}{1cm}
+\Large
+How to combine information from test runs? \\[1em]
+What can we learn from failing tests?
+\end{changemargin}
 \end{frame}
 
 \section{Conclusions}
