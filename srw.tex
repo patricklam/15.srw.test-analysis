@@ -158,9 +158,10 @@ basicstyle=\ttfamily,commentstyle=\scriptsize\itshape,showstringspaces=false,bre
 \begin{frame}
   \frametitle{Goal}
   \Large
-  \begin{changemargin}{1cm}
-Convince you to analyze programs \emph{and tests} for fun and profit!
-  \end{changemargin}
+\begin{center}
+Convince you to \\ analyze \emph{tests} (with their programs) \\ 
+for fun and profit!
+\end{center}
 \end{frame}
 
 
@@ -277,8 +278,9 @@ use solver to find new paths/inputs.
 \end{frame}
 
 \begin{frame}
-  \frametitle{PHP Analysis}
+  \frametitle{PHP Analysis (Kneuss, Suter, Kuncak)}
 
+\Large
 \begin{center}
 \includegraphics[width=.2\textwidth]{images/phantm-blue-solid.png}
 \end{center}
@@ -290,7 +292,7 @@ use solver to find new paths/inputs.
 \end{frame}
 
 \begin{frame}
-  \frametitle{TamiFlex}
+  \frametitle{TamiFlex (Bodden et al)}
 
 \begin{center}
 \includegraphics[width=.2\textwidth]{images/tamiflex.png}
@@ -308,7 +310,7 @@ use solver to find new paths/inputs.
 \end{frame}
 
 \begin{frame}
-  \frametitle{DSD-Crasher}
+  \frametitle{DSD-Crasher (Csallner and Smaragdakis)}
 
 \begin{center}
 \includegraphics[width=\textwidth]{images/dsd.png}
@@ -881,7 +883,7 @@ Weka: Machine learning framework
 \begin{frame}
 \frametitle{Results: Asserts vs Methods distribution} {
    \hspace*{0em}
-%     \input{scatter_plot}
+     \input{scatter_plot}
    }
 \end{frame}
 
@@ -967,7 +969,10 @@ public void test_TCC___String() {
 \begin{frame}
   \frametitle{Next Step}
 
+\begin{center}
+\Large
 Test refactoring.
+\end{center}
 \end{frame}
 
 
@@ -1032,5 +1037,14 @@ Tests are write-only with respect to the tool.
 
 \section{Conclusions}
 
+
+\begin{frame}
+  \frametitle{Tests: An Opportunity for Program Analysis}
+\begin{center}
+\Large
+We can go beyond test generation.\\[1em]
+Tests are a valuable source of information\\ about their associated programs.
+\end{center}
+\end{frame}
 
 \end{document}

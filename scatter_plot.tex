@@ -1,0 +1,16 @@
+\begin{figure}
+\begin{tikzpicture}
+\begin{axis}[
+   xlabel={Asserts}, 
+   ylabel={Methods},
+   scatter src=\thisrow{z},
+]
+\addplot[
+   scatter, 
+   only marks, 
+   ]
+   table
+   {data_by_project.dat};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
