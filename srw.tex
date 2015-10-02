@@ -14,9 +14,12 @@
 \usepackage{tikz}
 \usepackage{alltt}
 \usepackage[normalem]{ulem}
+\usetikzlibrary{petri}
 \usetikzlibrary{arrows}
 \usetikzlibrary{automata}
 \usetikzlibrary{shapes}
+\usepgflibrary{shapes.geometric}
+\usetikzlibrary{shapes.geometric}
 \usepackage{amsmath,amssymb}
 \usepackage{rotating}
 \usepackage{ulem}
@@ -159,8 +162,7 @@ basicstyle=\ttfamily,commentstyle=\scriptsize\itshape,showstringspaces=false,bre
   \frametitle{Goal}
   \Large
 \begin{center}
-Convince you to \\ analyze \emph{tests} (with their programs) \\ 
-for fun and profit!
+Convince you to \\ analyze \emph{tests} (with their programs).
 \end{center}
 \end{frame}
 
@@ -214,9 +216,14 @@ m=0.03514
 \Large  Extensive library support:
 
 \begin{center}
-\includegraphics[width=.2\textwidth] {images/junit-logo.png} \hspace*{3em}
+\includegraphics[width=.3\textwidth] {images/sunit.png} \\[1em]
+
+\begin{minipage}{.2\textwidth} \vspace*{-2em} \includegraphics[width=\textwidth] {images/junit-logo.png} 
+\end{minipage}
+ \hspace*{3em}
 \includegraphics[width=.2\textwidth] {images/Nunit.png}  \hspace*{3em}
-\includegraphics[width=.2\textwidth] {images/PHPUnit-logo.jpg}
+\begin{minipage}{.2\textwidth} \vspace*{-1.5em} \includegraphics[width=\textwidth] {images/PHPUnit-logo.jpg} 
+\end{minipage}
 \end{center}
 
 \end{frame}
@@ -340,7 +347,11 @@ use solver to find new paths/inputs.
     \begin{beamercolorbox}[sep=12pt,center]{part title}
       \usebeamerfont{section title}Similar Test Methods\\ \small (a case study in static analysis of tests)\par
     \end{beamercolorbox}
+\vspace*{2em}
   \end{centering}
+\begin{center}
+(with Felix Fang)
+\end{center}
 \end{frame}
 
 \begin{frame}
@@ -435,11 +446,11 @@ class BazWidgetTest {
      \vspace*{-1em}
      \Large
      \begin{itemize}
-        \item Developers often copy-paste tests \\(and probably enjoy doing it)
+        \item Developers often copy-paste tests \\(and probably enjoy doing it).
            \vspace{0.5cm}
-        \item Why? JUnit test cases tend to be self-contained
+        \item Why? JUnit test cases tend to be self-contained.
            \vspace{1cm}
-        \item Test clones can become difficult to comprehend or maintain later
+        \item Test clones can become difficult to comprehend or maintain later.
      \end{itemize}
 	}
 \end{frame}
@@ -614,12 +625,25 @@ public void test2() {
 \end{frame}
 
 \begin{frame}
-  \frametitle{Using Assertion Fingerprints} {
-     \Large
-     Match test methods with same ordered sets of \\
-     \vspace{0.5cm}
-     assertion fingerprints.
-	}
+  \frametitle{Using Assertion Fingerprints}
+\begin{center}
+\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto,
+                    every place/.style=     {minimum size=8mm,thick,draw=blue!75,fill=blue!20},
+                    every transition/.style={thick,draw=black!75,fill=black!20},
+                    red place/.style=       {place,draw=red!75,fill=red!20},
+                    blue transition/.style=       {transition,minimum size=8mm,draw=blue!75,fill=blue!20},
+                    yellow diamond/.style=       {transition,diamond,minimum size=8mm,draw=yellow!45,fill=yellow!20},
+                    every label/.style=     {red}]
+      \node[red place, tokens=3] (a) { ~ };
+      \node[blue transition, tokens=4, right of=a] (b) { ~ };
+      \node[red place, tokens=3, below of=a, xshift=3em] (c) { ~ };
+      \node[red place, tokens=3, below of=a, xshift=6em,yshift=1em] (d) { ~ };
+      \node[blue transition, tokens=4, below of=a, yshift=-4em] (e) { ~ };
+      \node[yellow diamond, tokens=2, below of=a, yshift=-3em, xshift=6em] (e) { ~ };
+\end{tikzpicture}
+\Large \\
+Group tests with similar assert structures.
+\end{center}
 \end{frame}
 \note{
 Since assertions form a fundamental part of the structure of JUnit tests, we would like to place a strong focus on them.
